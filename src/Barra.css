@@ -1,0 +1,29 @@
+.container{
+    background-color: black;
+    width: 700px;
+    height: 200px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    opacity: 0.8;
+}
+
+h1{
+    font-size: 32px;
+}
+
+.barraContainer {
+    width: 500px;
+    height: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.barra{
+    display: block;
+    text-align: center;
+    width: 100%;
+    background-color: green;
+}

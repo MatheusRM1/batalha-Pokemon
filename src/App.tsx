@@ -1,12 +1,12 @@
 import './App.css'
+import Barra from './Barra'
 
 function App() {
   return (
-    <>
-      <h1>
-        Hello World
-      </h1>
-    </>
+    <div className='tela'>
+      <Barra/>
+      <Barra/>
+    </div>
   )
 }
 
