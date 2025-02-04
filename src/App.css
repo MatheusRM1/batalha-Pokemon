@@ -2,11 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 90vh;
 }
 
 .tela{
   display: flex;
   flex-direction: column;
+  gap: 200px;
+}
+
+.containerJogador{
+  display: flex;
+  flex-direction: row;
   gap: 100px;
 }
 
