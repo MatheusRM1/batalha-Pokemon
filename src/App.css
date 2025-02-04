@@ -1,19 +1,21 @@
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh;
-}
-
 .tela{
   display: flex;
   flex-direction: column;
-  gap: 200px;
+  gap: 100px;
 }
 
-.containerJogador{
+.containerJogador1, .containerJogador2{
   display: flex;
   flex-direction: row;
   gap: 100px;
+}
+
+.containerJogador1{
+  justify-content: end;
+  align-items: end;
+}
+.containerJogador2{
+  justify-content: start;
+  align-items: start;
 }
 
