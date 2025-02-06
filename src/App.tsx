@@ -10,6 +10,12 @@ function App() {
   const [ppJ2, setPpJ2] = useState(100);
   const [turno, setTurno] = useState(0);
 
+  const itensJ = [
+    { nome: "Elidio", cura: 5, recuperaPP: 0 },
+    { nome: "Semente", cura: 10, recuperaPP: 5 },
+    { nome: "Welcome", cura: 50, recuperaPP: 40 },
+  ];
+
   const ataquesJ1 = [
     { nome: "Garra de Dragão", dano: 5, pp: 10 },
     { nome: "Rajada de Fogo", dano: 30, pp: 25 },
@@ -46,6 +52,16 @@ function App() {
     }
   }
 
+  function usarItem(atacante: "J1" | "J2", cura: number, recuperaPP: number){
+    if(atacante === "J1"){
+      setPvJ1((prevPv) => Math.min(Math.max(prevPv + cura, 0), 100));
+      setPpJ1((prevPp) => Math.min(Math.max(prevPp + recuperaPP, 0), 100));
+    } else if(atacante === "J2"){
+      setPvJ2((prevPv) => Math.min(Math.max(prevPv + cura, 0), 100));
+      setPpJ2((prevPp) => Math.min(Math.max(prevPp + recuperaPP, 0), 100));
+    }
+  }
+
   function TurnoJ1() {
     return turno % 2 === 0;
   }
@@ -73,6 +89,8 @@ function App() {
           <Botoes
             ataques={ataquesJ1}
             atacar={(dano, pp) => atacar("J1", dano, pp)}
+            itens={itensJ}
+            usarItem={(cura, recuperaPP) => usarItem("J1", cura, recuperaPP)}
           />
         </Barra>
       </div>
@@ -82,6 +100,8 @@ function App() {
           <Botoes
             ataques={ataquesJ2}
             atacar={(dano, pp) => atacar("J2", dano, pp)}
+            itens={itensJ}
+            usarItem={(cura, recuperaPP) => usarItem("J2", cura, recuperaPP)}
           />
         </Barra>
       </div>

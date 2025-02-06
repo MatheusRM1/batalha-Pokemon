@@ -1,7 +1,7 @@
 .tela {
   display: flex;
   flex-direction: column;
-  gap: 110px;
+  gap: 80px;
   min-height: 100%;
 }
 
