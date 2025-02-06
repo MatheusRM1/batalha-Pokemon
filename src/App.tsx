@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Barra from "./Barra";
+import Botoes from "./Botoes";
 
 function App() {
   const [pvJ1, setPvJ1] = useState(100);
@@ -22,11 +23,23 @@ function App() {
   ];
 
   function atacar(atacante: "J1" | "J2", dano: number, pp: number) {
-    if (atacante === "J1" && ppJ1 >= 10 && turno % 2 !== 0 && pvJ1 > 0 && pvJ2 > 0) {
+    if (
+      atacante === "J1" &&
+      ppJ1 >= 10 &&
+      turno % 2 !== 0 &&
+      pvJ1 > 0 &&
+      pvJ2 > 0
+    ) {
       setPvJ2((prevPv) => Math.max(prevPv - dano, 0));
       setPpJ1((prevPp) => Math.max(prevPp - pp, 0));
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
-    } else if (atacante === "J2" && ppJ2 >= 10 && turno % 2 === 0 && pvJ1 > 0 && pvJ2 > 0) {
+    } else if (
+      atacante === "J2" &&
+      ppJ2 >= 10 &&
+      turno % 2 === 0 &&
+      pvJ1 > 0 &&
+      pvJ2 > 0
+    ) {
       setPvJ1((prevPv) => Math.max(prevPv - 20, 0));
       setPpJ2((prevPp) => Math.max(prevPp - pp, 0));
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
@@ -56,23 +69,21 @@ function App() {
       </div>
       <div className="containerJogador1">
         <img src="../src/assets/charizard-seeklogo.png" width={300} />
-        <Barra
-          pv={pvJ1}
-          pp={ppJ1}
-          turno={TurnoJ1()}
-          ataques={ataquesJ1}
-          atacar={(dano, pp) => atacar("J1", dano, pp)}
-        />
+        <Barra pv={pvJ1} pp={ppJ1} turno={TurnoJ1()}>
+          <Botoes
+            ataques={ataquesJ1}
+            atacar={(dano, pp) => atacar("J1", dano, pp)}
+          />
+        </Barra>
       </div>
       <div className="containerJogador2">
         <img src="../src/assets/pikachu-seeklogo.svg" width={300} />
-        <Barra
-          pv={pvJ2}
-          pp={ppJ2}
-          turno={TurnoJ2()}
-          ataques={ataquesJ2}
-          atacar={(dano, pp) => atacar("J2", dano, pp)}
-        />
+        <Barra pv={pvJ2} pp={ppJ2} turno={TurnoJ2()}>
+          <Botoes
+            ataques={ataquesJ2}
+            atacar={(dano, pp) => atacar("J2", dano, pp)}
+          />
+        </Barra>
       </div>
     </div>
   );

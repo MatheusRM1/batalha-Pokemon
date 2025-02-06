@@ -1,0 +1,36 @@
+.containerBotoes {
+  display: grid;
+  grid-template-columns: 10fr 10fr;
+  gap: 20px;
+}
+
+.botao {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  background-color: blanchedalmond;
+  border: 3px solid #04bade;
+  border-radius: 15px;
+}
+
+.botao:hover {
+  background-color: brown;
+  transition: all 0.2s;
+  color: white;
+}
+
+.acoes {
+  text-align: center;
+}
+
+.info {
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.containerInfo {
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
