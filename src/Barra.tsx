@@ -1,13 +1,17 @@
+import { useState } from "react";
 import "./Barra.css";
 
 interface BarraProps {
   pv: number;
-  pf: number;
+  pp: number;
   turno: boolean;
-  atacar: () => void;
+  ataques: { nome: string; dano: number; pp: number }[];
+  atacar: (dano: number, pp: number) => void;
 }
 
-export default function Barra({ pv, pf, atacar, turno }: BarraProps) {
+export default function Barra({ pv, pp, ataques, atacar, turno }: BarraProps) {
+  const [opcoesAtaque, setOpcoesAtaque] = useState(false);
+
   return (
     <>
       <div className="container" style={{ opacity: turno ? 0.5 : 1 }}>
@@ -21,10 +25,10 @@ export default function Barra({ pv, pf, atacar, turno }: BarraProps) {
             </div>
           </div>
           <div className="pf">
-            <h2>PF</h2>
+            <h2>PP</h2>
             <div className="barraContainer">
-              <span className="barraPF" style={{ width: `${pf}%` }}>
-                {pf}/100
+              <span className="barraPP" style={{ width: `${pp}%` }}>
+                {pp}/100
               </span>
             </div>
           </div>
@@ -32,12 +36,39 @@ export default function Barra({ pv, pf, atacar, turno }: BarraProps) {
         <div className="acoes">
           <h2>Ações</h2>
           <div className="containerBotoes">
-            <button className="botao" onClick={atacar}>
-              Atacar
-            </button>
-            <button className="botao">Cura</button>
-            <button className="botao">Raio</button>
-            <button className="botao">Fogo</button>
+            {opcoesAtaque ? (
+              <>
+                {ataques.map((ataque, index) => (
+                  <button
+                    key={index}
+                    className="botao"
+                    onClick={() => {
+                      atacar(ataque.dano, ataque.pp);
+                      setOpcoesAtaque(false);
+                    }}
+                  >
+                    {ataque.nome}
+                    <div className="containerInfo">
+                      <p className="info">PP - {ataque.pp}</p>
+                      <p className="info">ATK - {ataque.dano}</p>
+                    </div>
+                  </button>
+                ))}
+                <button
+                  className="botao"
+                  onClick={() => setOpcoesAtaque(false)}
+                >
+                  Voltar
+                </button>
+              </>
+            ) : (
+              <button
+                className="botao"
+                onClick={() => setOpcoesAtaque(true)}
+              >
+                Atacar
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -1,44 +1,47 @@
-.tela{
+.tela {
   display: flex;
   flex-direction: column;
   gap: 110px;
+  min-height: 100%;
 }
 
-.containerJogador1, .containerJogador2{
+.containerJogador1,
+.containerJogador2 {
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  gap: 20px;
+  height: 50%;
+  width: 100%;
 }
 
-.containerJogador1{
+.containerJogador1 {
   justify-content: end;
   align-items: end;
 }
-.containerJogador2{
+.containerJogador2 {
   justify-content: start;
   align-items: start;
 }
 
-.rodada{
+.rodada {
   font-size: 32px;
   color: black;
   font-weight: 600;
 }
 
-.quadro{
+.quadro {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border-radius: 50px;
   border: 4px solid gold;
-  width: 500px;
+  width: 25%;
   height: 200px;
   background-color: beige;
   position: absolute;
   margin: 40px;
-  -webkit-box-shadow: -2px 7px 38px -1px rgba(0,0,0,1);
--moz-box-shadow: -2px 7px 38px -1px rgba(0,0,0,1);
-box-shadow: -2px 7px 38px -1px rgba(0,0,0,1);
+  -webkit-box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
+  -moz-box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
+  box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
 }
-
