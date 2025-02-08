@@ -21,42 +21,42 @@ function App() {
     { nome: "Welcome", cura: 50, uso: 1 },
   ]);
 
-  const ataquesJ1 = [
+  const [ataquesJ1, setAtaqueJ1] = useState([
     { nome: "Garra de Dragão", dano: 5, pp: 10 },
     { nome: "Rajada de Fogo", dano: 30, pp: 25 },
     { nome: "Golpe de Ar", dano: 10, pp: 15 },
-  ];
+  ]);
 
-  const ataquesJ2 = [
+  const [ataquesJ2, setAtaqueJ2] = useState([
     { nome: "Thunderstorm", dano: 15, pp: 10 },
     { nome: "Electro Ball", dano: 20, pp: 30 },
     { nome: "Ataque Rápido", dano: 5, pp: 8 },
-  ];
+  ]);
 
   function atacar(atacante: "J1" | "J2", index: number) {
-    const ataqueJ1 = structuredClone(ataquesJ1[index]);
-    const ataqueJ2 = structuredClone(ataquesJ2[index]);
+    const ataqueJ1 = [...ataquesJ1];
+    const ataqueJ2 = [...ataquesJ2];
     if (
       atacante === "J1" &&
       turno % 2 !== 0 &&
       pvJ1 > 0 &&
       pvJ2 > 0 &&
-      ataqueJ1.pp > 0
+      ataqueJ1[index].pp > 0
     ) {
-      setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1.dano, 0));
-      ataqueJ1.pp -= 1;
-      ataquesJ1[index] = ataqueJ1;
+      setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
+      ataqueJ1[index].pp -= 1;
+      setAtaqueJ1(ataqueJ1);
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
     } else if (
       atacante === "J2" &&
       turno % 2 === 0 &&
       pvJ1 > 0 &&
       pvJ2 > 0 &&
-      ataqueJ2.pp > 0
+      ataqueJ2[index].pp > 0
     ) {
-      setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2.dano, 0));
-      ataqueJ2.pp -= 1;
-      ataquesJ2[index] = ataqueJ2;
+      setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
+      ataqueJ2[index].pp -= 1;
+      setAtaqueJ2(ataqueJ2);
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
     }
   }
@@ -66,12 +66,16 @@ function App() {
     const itemJ2 = [...itensJ2];
 
     if (atacante === "J1" && turno % 2 !== 0 && itemJ1[index].uso > 0) {
-      setPvJ1((prevPv) => Math.min(Math.max(prevPv + itemJ1[index].cura, 0), 100));
+      setPvJ1((prevPv) =>
+        Math.min(Math.max(prevPv + itemJ1[index].cura, 0), 100)
+      );
       itemJ1[index].uso -= 1;
       setItensJ1(itemJ1);
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
     } else if (atacante === "J2" && turno % 2 === 0 && itemJ2[index].uso > 0) {
-      setPvJ2((prevPv) => Math.min(Math.max(prevPv + itemJ2[index].cura, 0), 100));
+      setPvJ2((prevPv) =>
+        Math.min(Math.max(prevPv + itemJ2[index].cura, 0), 100)
+      );
       itemJ2[index].uso -= 1;
       setItensJ2(itemJ2);
       setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
