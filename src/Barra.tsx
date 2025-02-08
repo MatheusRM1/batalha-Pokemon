@@ -3,12 +3,11 @@ import "./Barra.css";
 
 interface BarraProps {
   pv: number;
-  pp: number;
   turno: boolean;
   children: ReactNode;
 }
 
-export default function Barra({ pv, pp, turno, children }: BarraProps) {
+export default function Barra({ pv, turno, children }: BarraProps) {
   return (
     <>
       <div className="container" style={{ opacity: turno ? 0.5 : 1 }}>
@@ -18,14 +17,6 @@ export default function Barra({ pv, pp, turno, children }: BarraProps) {
             <div className="barraContainer">
               <span className="barra" style={{ width: `${pv}%` }}>
                 {pv}/100
-              </span>
-            </div>
-          </div>
-          <div className="pf">
-            <h2>PP</h2>
-            <div className="barraContainer">
-              <span className="barraPP" style={{ width: `${pp}%` }}>
-                {pp}/100
               </span>
             </div>
           </div>

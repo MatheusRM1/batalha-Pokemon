@@ -3,12 +3,13 @@ import "./Botoes.css";
 
 interface BotoesProps {
     ataques: { nome: string; dano: number; pp: number }[];
-    atacar: (dano: number, pp: number) => void;
-    itens: { nome: string; cura: number; recuperaPP: number }[];
-    usarItem: (cura: number, recuperaPP: number) => void;
+    atacar: (index: number) => void;
+    itens: { nome: string; cura: number; uso: number }[];
+    usarItem: (index: number) => void;
+    turno: boolean;
 }
 
-export default function Botoes({ataques, atacar, itens, usarItem} : BotoesProps) {
+export default function Botoes({ataques, atacar, itens, usarItem, turno} : BotoesProps) {
     const [opcoesAtaque, setOpcoesAtaque] = useState(false);
     const [opcoesItens, setOpcoesItens] = useState(false);
   return (
@@ -23,14 +24,15 @@ export default function Botoes({ataques, atacar, itens, usarItem} : BotoesProps)
                   key={index}
                   className="botao"
                   onClick={() => {
-                    atacar(ataque.dano, ataque.pp);
+                    atacar(index);
                     setOpcoesAtaque(false);
                   }}
+                  disabled={ataque.pp === 0}
                 >
                   {ataque.nome}
                   <div className="containerInfo">
-                    <p className="info">PP - {ataque.pp}</p>
-                    <p className="info">ATK - {ataque.dano}</p>
+                    <p className="info">PP/{ataque.pp}</p>
+                    <p className="info">ATK/{ataque.dano}</p>
                   </div>
                 </button>
               ))}
@@ -39,7 +41,7 @@ export default function Botoes({ataques, atacar, itens, usarItem} : BotoesProps)
               </button>
             </>
           ) : ( !opcoesItens && 
-            <button className="botao" onClick={() => setOpcoesAtaque(true)}>
+            <button className="botao" disabled={turno} onClick={() => setOpcoesAtaque(true)}>
               Atacar
             </button>
           )}
@@ -50,14 +52,15 @@ export default function Botoes({ataques, atacar, itens, usarItem} : BotoesProps)
                   key={index}
                   className="botao"
                   onClick={() => {
-                    usarItem(item.cura, item.recuperaPP);
+                    usarItem(index);
                     setOpcoesItens(false);
                   }}
+                  disabled={item.uso === 0}
                 >
                   {item.nome}
                   <div className="containerInfo">
-                    <p className="info">Cura - {item.cura}</p>
-                    <p className="info">RecPP - {item.recuperaPP}</p>
+                    <p className="info">Cura/{item.cura}</p>
+                    <p className="info">Uso/{item.uso}</p>
                   </div>
                 </button>
               ))}
@@ -66,7 +69,7 @@ export default function Botoes({ataques, atacar, itens, usarItem} : BotoesProps)
               </button>
             </>
           ) : ( !opcoesAtaque &&
-            <button className="botao" onClick={() => setOpcoesItens(true)}>
+            <button className="botao" disabled={turno} onClick={() => setOpcoesItens(true)}>
               Itens
             </button>
           )}

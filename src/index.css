@@ -1,9 +1,14 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'PixelFont';
   color: rgba(255, 255, 255, 0.87);
   background-image: url('../src/assets/cenario.jpg');
   background-size: cover;
   background-position: center; 
   background-repeat: no-repeat; 
   background-attachment: fixed; 
+}
+
+@font-face {
+  font-family: 'PixelFont';
+  src: url('../src/assets/fonts/Pokemon\ Classic.ttf') format('truetype');
 }

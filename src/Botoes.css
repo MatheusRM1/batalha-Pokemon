@@ -1,3 +1,12 @@
+p, button {
+  font-family: "PixelFont";
+}
+
+button{
+  font-size: 10px;
+  font-weight: 900;
+}
+
 .containerBotoes {
   display: grid;
   grid-template-columns: 10fr 10fr;

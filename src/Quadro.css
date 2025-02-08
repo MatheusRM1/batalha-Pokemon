@@ -1,0 +1,22 @@
+.rodada {
+    font-size: 24px;
+    color: black;
+    font-weight: 900;
+  }
+  
+  .quadro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 50px;
+    border: 4px solid gold;
+    width: 25%;
+    height: 200px;
+    background-color: beige;
+    position: absolute;
+    margin: 40px;
+    -webkit-box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
+    box-shadow: -2px 7px 38px -1px rgba(0, 0, 0, 1);
+  }
