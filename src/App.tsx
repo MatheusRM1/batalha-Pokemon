@@ -82,11 +82,9 @@ function App() {
     }
   }
 
-  function TurnoJ1() {
-    return turno % 2 === 0;
-  }
-
-  function TurnoJ2() {
+  function TurnoJ1(atacante: "J1" | "J2") {
+    if (atacante === "J1") return turno % 2 === 0;
+    
     return turno % 2 !== 0;
   }
 
@@ -95,25 +93,25 @@ function App() {
       <Quadro pvJ1={pvJ1} pvJ2={pvJ2} turno={turno} />
       <div className="containerJogador1">
         <img src="../src/assets/charizard-seeklogo.png" width={300} />
-        <Barra pv={pvJ1} turno={TurnoJ1()}>
+        <Barra pv={pvJ1} turno={TurnoJ1("J1")}>
           <Botoes
             ataques={ataquesJ1}
             atacar={(index) => atacar("J1", index)}
             itens={itensJ1}
             usarItem={(index) => usarItem("J1", index)}
-            turno={TurnoJ1()}
+            turno={TurnoJ1("J1")}
           />
         </Barra>
       </div>
       <div className="containerJogador2">
         <img src="../src/assets/pikachu-seeklogo.svg" width={300} />
-        <Barra pv={pvJ2} turno={TurnoJ2()}>
+        <Barra pv={pvJ2} turno={TurnoJ1("J2")}>
           <Botoes
             ataques={ataquesJ2}
             atacar={(index) => atacar("J2", index)}
             itens={itensJ2}
             usarItem={(index) => usarItem("J2", index)}
-            turno={TurnoJ2()}
+            turno={TurnoJ1("J2")}
           />
         </Barra>
       </div>
