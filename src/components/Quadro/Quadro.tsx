@@ -4,9 +4,10 @@ interface QuadroProps{
     pvJ1: number;
     pvJ2: number;
     turno: number;
+    descricao: string;
 }
 
-export default function Quadro({pvJ1, pvJ2, turno}: QuadroProps) {
+export default function Quadro({pvJ1, pvJ2, turno, descricao}: QuadroProps) {
   return (
     <>
       <div className="quadro">
@@ -19,6 +20,8 @@ export default function Quadro({pvJ1, pvJ2, turno}: QuadroProps) {
         ) : (
           <p className="rodada">Vez do Jogador 2</p>
         )}
+
+        <p className="mensagem">{descricao}</p>
       </div>
     </>
   );
