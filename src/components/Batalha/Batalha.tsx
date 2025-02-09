@@ -40,8 +40,9 @@ export default function Batalha() {
 
   function Turno(atacante: "J1" | "J2") {
     if (atacante === "J1") return turno % 2 === 0;
+    else if (atacante === "J2") return turno % 2 !== 0;
 
-    return turno % 2 !== 0;
+    return false;
   }
 
   function verificaGanhador() {
@@ -49,101 +50,75 @@ export default function Batalha() {
     else return false;
   }
 
-  function verificaAtaque(atacante: "J1" | "J2", index: number) {
+  function modificaPV(atacante: "J1" | "J2", index: number, acao: "ataca" | "cura") {
     const ataqueJ1 = [...ataquesJ1];
     const ataqueJ2 = [...ataquesJ2];
-    if (
-      atacante === "J1" &&
-      turno % 2 !== 0 &&
-      !verificaGanhador() &&
-      ataqueJ1[index].pp > 0
-    )
-      return true;
-    else if (
-      atacante === "J2" &&
-      turno % 2 === 0 &&
-      !verificaGanhador() &&
-      ataqueJ2[index].pp > 0
-    )
-      return false;
+    const itemJ1 = [...itensJ1];
+    const itemJ2 = [...itensJ2];
 
-    return false;
-  }
-
-  function modificaPV(atacante: "J1" | "J2", index: number) {
-    const ataqueJ1 = [...ataquesJ1];
-    const ataqueJ2 = [...ataquesJ2];
-
-    if (atacante === "J1") {
-      if (acertou(ataqueJ1[index].precisao)) {
-        setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
-        ataqueJ1[index].pp -= 1;
-        setAtaqueJ1(ataqueJ1);
-        setMensagem(`O ${ataqueJ1[index].nome} acertou`);
-      } else {
-        ataqueJ1[index].pp -= 1;
-        setAtaqueJ1(ataqueJ1);
-        setMensagem(`O ${ataqueJ1[index].nome} errou`);
+    if (acao === "ataca") {
+      if (atacante === "J1" && !verificaGanhador() && ataqueJ1[index].pp > 0) {
+        if (acertou(ataqueJ1[index].precisao)) {
+          setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
+          ataqueJ1[index].pp -= 1;
+          setAtaqueJ1(ataqueJ1);
+          setMensagem(`O ${ataqueJ1[index].nome} acertou`);
+        } else {
+          ataqueJ1[index].pp -= 1;
+          setAtaqueJ1(ataqueJ1);
+          setMensagem(`O ${ataqueJ1[index].nome} errou`);
+        }
+      } else if (
+        atacante === "J2" &&
+        !verificaGanhador() &&
+        ataqueJ2[index].pp > 0
+      ) {
+        if (acertou(ataqueJ2[index].precisao)) {
+          setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
+          ataqueJ2[index].pp -= 1;
+          setAtaqueJ2(ataqueJ2);
+          setMensagem(`O ${ataqueJ2[index].nome} acertou`);
+        } else {
+          ataqueJ2[index].pp -= 1;
+          setAtaqueJ2(ataqueJ2);
+          setMensagem(`O ${ataqueJ2[index].nome} errou`);
+        }
       }
-    } else if (atacante === "J2") {
-      if (acertou(ataqueJ2[index].precisao)) {
-        setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
-        ataqueJ2[index].pp -= 1;
+    } else if (acao === "cura") {
+      if (atacante === "J1" && itemJ1[index].uso > 0) {
+        setPvJ1((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
+        for (let i = 0; i < ataqueJ1.length; i++) {
+          ataqueJ1[i].pp = Math.min(
+            ataqueJ1[i].pp + itemJ1[index].recuperaPP,
+            ataqueJ1[i].ppMax
+          );
+        }
+        itemJ1[index].uso -= 1;
+        setItensJ1(itemJ1);
+        setAtaqueJ1(ataqueJ1);
+      } else if (atacante === "J2" && itemJ2[index].uso > 0) {
+        setPvJ2((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
+        for (let i = 0; i < ataqueJ2.length; i++) {
+          ataqueJ2[i].pp = Math.min(
+            ataqueJ2[i].pp + itemJ2[index].recuperaPP,
+            ataqueJ2[i].ppMax
+          );
+        }
+        itemJ2[index].uso -= 1;
+        setItensJ2(itemJ2);
         setAtaqueJ2(ataqueJ2);
-        setMensagem(`O ${ataqueJ2[index].nome} acertou`);
-      } else {
-        ataqueJ2[index].pp -= 1;
-        setAtaqueJ2(ataqueJ2);
-        setMensagem(`O ${ataqueJ2[index].nome} errou`);
       }
     }
   }
 
   function atacar(atacante: "J1" | "J2", index: number) {
-    if (verificaAtaque(atacante, index)) {
-      modificaPV(atacante, index);
-    } else if (!verificaAtaque(atacante, index)) {
-      modificaPV(atacante, index);
-    }
-
-    setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
+    modificaPV(atacante, index, "ataca");
+    setTurno((prevTurno) => prevTurno + 1);
   }
 
   function usarItem(atacante: "J1" | "J2", index: number) {
-    const itemJ1 = [...itensJ1];
-    const itemJ2 = [...itensJ2];
-    const ataqueJ1 = [...ataquesJ1];
-    const ataqueJ2 = [...ataquesJ2];
-
-    if (atacante === "J1" && turno % 2 !== 0 && itemJ1[index].uso > 0) {
-      setPvJ1((prevPv) =>
-        Math.min(Math.max(prevPv + itemJ1[index].cura, 0), 100)
-      );
-      for (let i = 0; i < ataqueJ1.length; i++) {
-        ataqueJ1[i].pp = Math.min(
-          ataqueJ1[i].pp + itemJ1[index].recuperaPP,
-          ataqueJ1[i].ppMax
-        );
-      }
-      itemJ1[index].uso -= 1;
-      setItensJ1(itemJ1);
-      setAtaqueJ1(ataqueJ1);
-      setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
-    } else if (atacante === "J2" && turno % 2 === 0 && itemJ2[index].uso > 0) {
-      setPvJ2((prevPv) =>
-        Math.min(Math.max(prevPv + itemJ2[index].cura, 0), 100)
-      );
-      for (let i = 0; i < ataqueJ2.length; i++) {
-        ataqueJ2[i].pp = Math.min(
-          ataqueJ2[i].pp + itemJ2[index].recuperaPP,
-          ataqueJ2[i].ppMax
-        );
-      }
-      itemJ2[index].uso -= 1;
-      setItensJ2(itemJ2);
-      setAtaqueJ2(ataqueJ2);
-      setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
-    }
+    modificaPV(atacante, index, "cura")
+    setTurno((prevTurno) => prevTurno + 1);
   }
 
   return (
