@@ -22,16 +22,20 @@ function App() {
   ]);
 
   const [ataquesJ1, setAtaqueJ1] = useState([
-    { nome: "Garra de Dragão", dano: 5, pp: 10 },
-    { nome: "Rajada de Fogo", dano: 30, pp: 25 },
-    { nome: "Golpe de Ar", dano: 10, pp: 15 },
+    { nome: "Garra de Dragão", dano: 5, precisao: 75, pp: 10 },
+    { nome: "Rajada de Fogo", dano: 30, precisao: 80, pp: 25 },
+    { nome: "Golpe de Ar", dano: 10, precisao: 70, pp: 15 },
   ]);
 
   const [ataquesJ2, setAtaqueJ2] = useState([
-    { nome: "Thunderstorm", dano: 15, pp: 10 },
-    { nome: "Electro Ball", dano: 20, pp: 30 },
-    { nome: "Ataque Rápido", dano: 5, pp: 8 },
+    { nome: "Thunderstorm", dano: 15, precisao: 75, pp: 10 },
+    { nome: "Electro Ball", dano: 20, precisao: 90, pp: 30 },
+    { nome: "Ataque Rápido", dano: 5, precisao: 80, pp: 8 },
   ]);
+
+  function acertou(x: number) {
+    return Math.random() * 100 <= x;
+  }
 
   function atacar(atacante: "J1" | "J2", index: number) {
     const ataqueJ1 = [...ataquesJ1];
@@ -43,10 +47,13 @@ function App() {
       pvJ2 > 0 &&
       ataqueJ1[index].pp > 0
     ) {
-      setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
-      ataqueJ1[index].pp -= 1;
-      setAtaqueJ1(ataqueJ1);
-      setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
+      if (acertou(ataqueJ1[index].precisao)) {
+        setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
+        ataqueJ1[index].pp -= 1;
+        setAtaqueJ1(ataqueJ1);
+      } 
+      else console.log(`${ataqueJ1[index].nome} acertou`);
+      
     } else if (
       atacante === "J2" &&
       turno % 2 === 0 &&
@@ -54,11 +61,15 @@ function App() {
       pvJ2 > 0 &&
       ataqueJ2[index].pp > 0
     ) {
-      setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
-      ataqueJ2[index].pp -= 1;
-      setAtaqueJ2(ataqueJ2);
-      setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
+      if (acertou(ataqueJ2[index].precisao)) {
+        setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
+        ataqueJ2[index].pp -= 1;
+        setAtaqueJ2(ataqueJ2);
+      } else
+      console.log(`${ataqueJ2[index].nome} acertou`);
     }
+    
+    setTurno((prevTurno) => Math.max(prevTurno + 1, 0));
   }
 
   function usarItem(atacante: "J1" | "J2", index: number) {
@@ -84,7 +95,7 @@ function App() {
 
   function TurnoJ1(atacante: "J1" | "J2") {
     if (atacante === "J1") return turno % 2 === 0;
-    
+
     return turno % 2 !== 0;
   }
 
