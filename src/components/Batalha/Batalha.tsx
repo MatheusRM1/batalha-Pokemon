@@ -23,16 +23,43 @@ export default function Batalha() {
   ]);
 
   const [ataquesJ1, setAtaqueJ1] = useState([
-    { nome: "Garra de Dragão", dano: 50, precisao: 75, pp: 5, ppMax: 5 },
+    { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
+    { nome: "Electro Ball", dano: 50, precisao: 90, pp: 5, ppMax: 5 },
+    { nome: "Ataque Rápido", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+  ]);
+
+  const [ataquesJ2, setAtaqueJ2] = useState([
+    { nome: "Garra de Dragão", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
     { nome: "Rajada de Fogo", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
     { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
   ]);
 
-  const [ataquesJ2, setAtaqueJ2] = useState([
-    { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 5, ppMax: 5 },
-    { nome: "Electro Ball", dano: 50, precisao: 90, pp: 5, ppMax: 5 },
-    { nome: "Ataque Rápido", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
-  ]);
+  function resetarBatalha() {
+    setPvJ1(100);
+    setPvJ2(100);
+    setTurno(0);
+    setMensagem("Comeca o Jogo");
+    setItensJ1([
+      { nome: "Elidio", cura: 5, recuperaPP: 3, uso: 3 },
+      { nome: "Semente", cura: 10, recuperaPP: 3, uso: 2 },
+      { nome: "I'am Back", cura: 50, recuperaPP: 3, uso: 1 },
+    ]);
+    setItensJ2([
+      { nome: "Elidio", cura: 5, recuperaPP: 5, uso: 3 },
+      { nome: "Semente", cura: 10, recuperaPP: 5, uso: 2 },
+      { nome: "I'am Back", cura: 50, recuperaPP: 5, uso: 1 },
+    ]);
+    setAtaqueJ1([
+      { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
+      { nome: "Electro Ball", dano: 50, precisao: 90, pp: 5, ppMax: 5 },
+      { nome: "Ataque Rápido", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+    ]);
+    setAtaqueJ2([
+      { nome: "Garra de Dragão", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
+      { nome: "Rajada de Fogo", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+      { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
+    ]);
+  }
 
   function acertou(precisao: number) {
     return Math.random() * 100 <= precisao;
@@ -46,18 +73,22 @@ export default function Batalha() {
   }
 
   function verificaGanhador() {
-    if (pvJ1 <= 0 || pvJ2 <= 0) return true;
+    if (pvJ1 === 0 || pvJ2 === 0) return true;
     else return false;
   }
 
-  function modificaPV(atacante: "J1" | "J2", index: number, acao: "ataca" | "cura") {
+  function modificaPV(
+    atacante: "J1" | "J2",
+    index: number,
+    acao: "ataca" | "cura"
+  ) {
     const ataqueJ1 = [...ataquesJ1];
     const ataqueJ2 = [...ataquesJ2];
     const itemJ1 = [...itensJ1];
     const itemJ2 = [...itensJ2];
 
     if (acao === "ataca") {
-      if (atacante === "J1" && !verificaGanhador() && ataqueJ1[index].pp > 0) {
+      if (atacante === "J1" && !verificaGanhador()) {
         if (acertou(ataqueJ1[index].precisao)) {
           setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
           ataqueJ1[index].pp -= 1;
@@ -68,11 +99,7 @@ export default function Batalha() {
           setAtaqueJ1(ataqueJ1);
           setMensagem(`O ${ataqueJ1[index].nome} errou`);
         }
-      } else if (
-        atacante === "J2" &&
-        !verificaGanhador() &&
-        ataqueJ2[index].pp > 0
-      ) {
+      } else if (atacante === "J2" && !verificaGanhador()) {
         if (acertou(ataqueJ2[index].precisao)) {
           setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
           ataqueJ2[index].pp -= 1;
@@ -85,7 +112,7 @@ export default function Batalha() {
         }
       }
     } else if (acao === "cura") {
-      if (atacante === "J1" && itemJ1[index].uso > 0) {
+      if (atacante === "J1") {
         setPvJ1((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
         for (let i = 0; i < ataqueJ1.length; i++) {
           ataqueJ1[i].pp = Math.min(
@@ -96,7 +123,7 @@ export default function Batalha() {
         itemJ1[index].uso -= 1;
         setItensJ1(itemJ1);
         setAtaqueJ1(ataqueJ1);
-      } else if (atacante === "J2" && itemJ2[index].uso > 0) {
+      } else if (atacante === "J2") {
         setPvJ2((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
         for (let i = 0; i < ataqueJ2.length; i++) {
           ataqueJ2[i].pp = Math.min(
@@ -117,15 +144,22 @@ export default function Batalha() {
   }
 
   function usarItem(atacante: "J1" | "J2", index: number) {
-    modificaPV(atacante, index, "cura")
+    modificaPV(atacante, index, "cura");
     setTurno((prevTurno) => prevTurno + 1);
   }
 
   return (
     <>
-      <Quadro pvJ1={pvJ1} pvJ2={pvJ2} turno={turno} descricao={mensagem} />
+      <Quadro
+        pvJ1={pvJ1}
+        pvJ2={pvJ2}
+        turno={turno}
+        descricao={mensagem}
+        ganhador={() => verificaGanhador()}
+        resetar={() => resetarBatalha()}
+      />
       <div className="containerJogador1">
-        <img src="../src/assets/charizard-seeklogo.png" width={300} />
+        <img src="../src/assets/pikachu-seeklogo.svg" width={300} />
         <Barra
           pv={pvJ1}
           turno={Turno("J1")}
@@ -142,7 +176,7 @@ export default function Batalha() {
         </Barra>
       </div>
       <div className="containerJogador2">
-        <img src="../src/assets/pikachu-seeklogo.svg" width={300} />
+        <img src="../src/assets/charizard-seeklogo.png" width={300} />
         <Barra
           pv={pvJ2}
           turno={Turno("J2")}

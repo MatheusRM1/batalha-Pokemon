@@ -27,3 +27,17 @@
     color: black;
     font-weight: 900;
   }
+
+  .reinicia{
+    background-color: #423eb6;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  .reinicia:hover{
+    background-color: #c8c5eb;
+    color: #423eb6;
+    transition: all 0.5s;
+  }
