@@ -6,12 +6,14 @@ interface BotoesProps {
     atacar: (index: number) => void;
     itens: { nome: string; cura: number; uso: number }[];
     usarItem: (index: number) => void;
+    ganhador: () => boolean;
     turno: boolean;
 }
 
-export default function Botoes({ataques, atacar, itens, usarItem, turno} : BotoesProps) {
+export default function Botoes({ataques, atacar, itens, usarItem, turno, ganhador} : BotoesProps) {
     const [opcoesAtaque, setOpcoesAtaque] = useState(false);
     const [opcoesItens, setOpcoesItens] = useState(false);
+
   return (
     <>
       <div className="acoes">
@@ -41,7 +43,7 @@ export default function Botoes({ataques, atacar, itens, usarItem, turno} : Botoe
               </button>
             </>
           ) : ( !opcoesItens && 
-            <button className="botao" disabled={turno} onClick={() => setOpcoesAtaque(true)}>
+            <button className="botao" disabled={turno || ganhador()} onClick={() => setOpcoesAtaque(true)}>
               Atacar
             </button>
           )}
@@ -69,7 +71,7 @@ export default function Botoes({ataques, atacar, itens, usarItem, turno} : Botoe
               </button>
             </>
           ) : ( !opcoesAtaque &&
-            <button className="botao" disabled={turno} onClick={() => setOpcoesItens(true)}>
+            <button className="botao" disabled={turno || ganhador()} onClick={() => setOpcoesItens(true)}>
               Itens
             </button>
           )}
