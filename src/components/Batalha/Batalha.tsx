@@ -11,20 +11,20 @@ export default function Batalha() {
   const [turno, setTurno] = useState(0);
   const [mensagem, setMensagem] = useState("Comeca o Jogo");
 
-  const [itensJ1, setItensJ1] = useState(dados.itensJ1);
-  const [itensJ2, setItensJ2] = useState(dados.itensJ1);
-  const [ataquesJ1, setAtaqueJ1] = useState(dados.ataquesJ1);
-  const [ataquesJ2, setAtaqueJ2] = useState(dados.ataquesJ2);
+  const [itensJ1, setItensJ1] = useState(structuredClone(dados.itensJ1));
+  const [itensJ2, setItensJ2] = useState(structuredClone(dados.itensJ2));
+  const [ataquesJ1, setAtaqueJ1] = useState(structuredClone(dados.ataquesJ1));
+  const [ataquesJ2, setAtaqueJ2] = useState(structuredClone(dados.ataquesJ2));
 
   function resetarBatalha() {
     setPvJ1(100);
     setPvJ2(100);
     setTurno(0);
     setMensagem("Comeca o Jogo");
-    setItensJ1(dados.itensJ1);
-    setItensJ2(dados.itensJ2);
-    setAtaqueJ1(dados.ataquesJ1);
-    setAtaqueJ2(dados.ataquesJ2);
+    setItensJ1(structuredClone(dados.itensJ1));
+    setItensJ2(structuredClone(dados.itensJ2));
+    setAtaqueJ1(structuredClone(dados.ataquesJ1));
+    setAtaqueJ2(structuredClone(dados.ataquesJ2));
   }
 
   function acertou(precisao: number) {
@@ -77,9 +77,7 @@ export default function Batalha() {
           setMensagem(`${ataqueJ2[index].nome} errou`);
         }
       }
-    } 
-    
-    else if (acao === "cura") {
+    } else if (acao === "cura") {
       if (atacante === "J1") {
         setPvJ1((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
         for (let i = 0; i < ataqueJ1.length; i++) {
