@@ -1,0 +1,40 @@
+{
+  "itensJ1": [
+    { "nome": "Restaurar", "cura": 5, "recuperaPP": 5, "uso": 3 },
+    { "nome": "Whey Protein", "cura": 10, "recuperaPP": 5, "uso": 2 },
+    { "nome": "I'am Back", "cura": 100, "recuperaPP": 5, "uso": 1 }
+  ],
+  "itensJ2": [
+    { "nome": "Estus", "cura": 5, "recuperaPP": 5, "uso": 3 },
+    { "nome": "Semente", "cura": 10, "recuperaPP": 5, "uso": 2 },
+    { "nome": "I'am Back", "cura": 100, "recuperaPP": 5, "uso": 1 }
+  ],
+  "ataquesJ1": [
+    { "nome": "Thunderstorm", "dano": 50, "precisao": 75, "pp": 2, "ppMax": 2 },
+    { "nome": "Electro Ball", "dano": 20, "precisao": 90, "pp": 5, "ppMax": 5 },
+    {
+      "nome": "Ataque Rápido",
+      "dano": 200,
+      "precisao": 80,
+      "pp": 3,
+      "ppMax": 3
+    }
+  ],
+  "ataquesJ2": [
+    {
+      "nome": "Garra de Dragão",
+      "dano": 200,
+      "precisao": 75,
+      "pp": 3,
+      "ppMax": 3
+    },
+    {
+      "nome": "Rajada de Fogo",
+      "dano": 20,
+      "precisao": 80,
+      "pp": 3,
+      "ppMax": 3
+    },
+    { "nome": "Golpe de Ar", "dano": 50, "precisao": 70, "pp": 5, "ppMax": 5 }
+  ]
+}

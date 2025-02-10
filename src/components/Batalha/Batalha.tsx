@@ -3,6 +3,7 @@ import Barra from "../Barra/Barra";
 import Botoes from "../Botoes/Botoes";
 import Quadro from "../Quadro/Quadro";
 import "./Batalha.css";
+import dados from "../../assets/dados.json";
 
 export default function Batalha() {
   const [pvJ1, setPvJ1] = useState(100);
@@ -10,55 +11,20 @@ export default function Batalha() {
   const [turno, setTurno] = useState(0);
   const [mensagem, setMensagem] = useState("Comeca o Jogo");
 
-  const [itensJ1, setItensJ1] = useState([
-    { nome: "Restaurar", cura: 5, recuperaPP: 5, uso: 3 },
-    { nome: "Whey Protein", cura: 10, recuperaPP: 5, uso: 2 },
-    { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
-  ]);
-
-  const [itensJ2, setItensJ2] = useState([
-    { nome: "Estus", cura: 5, recuperaPP: 5, uso: 3 },
-    { nome: "Semente", cura: 10, recuperaPP: 5, uso: 2 },
-    { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
-  ]);
-
-  const [ataquesJ1, setAtaqueJ1] = useState([
-    { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 2, ppMax: 2 },
-    { nome: "Electro Ball", dano: 20, precisao: 90, pp: 5, ppMax: 5 },
-    { nome: "Ataque Rápido", dano: 200, precisao: 80, pp: 3, ppMax: 3 },
-  ]);
-
-  const [ataquesJ2, setAtaqueJ2] = useState([
-    { nome: "Garra de Dragão", dano: 200, precisao: 75, pp: 3, ppMax: 3 },
-    { nome: "Rajada de Fogo", dano: 20, precisao: 80, pp: 3, ppMax: 3 },
-    { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
-  ]);
+  const [itensJ1, setItensJ1] = useState(dados.itensJ1);
+  const [itensJ2, setItensJ2] = useState(dados.itensJ1);
+  const [ataquesJ1, setAtaqueJ1] = useState(dados.ataquesJ1);
+  const [ataquesJ2, setAtaqueJ2] = useState(dados.ataquesJ2);
 
   function resetarBatalha() {
     setPvJ1(100);
     setPvJ2(100);
     setTurno(0);
     setMensagem("Comeca o Jogo");
-    setItensJ1([
-      { nome: "Restaurar", cura: 5, recuperaPP: 5, uso: 3 },
-      { nome: "Whey Protein", cura: 10, recuperaPP: 5, uso: 2 },
-      { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
-    ]);
-    setItensJ2([
-      { nome: "Estus", cura: 5, recuperaPP: 5, uso: 3 },
-      { nome: "Semente", cura: 10, recuperaPP: 5, uso: 2 },
-      { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
-    ]);
-    setAtaqueJ1([
-      { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 2, ppMax: 2 },
-      { nome: "Electro Ball", dano: 20, precisao: 90, pp: 5, ppMax: 5 },
-      { nome: "Ataque Rápido", dano: 200, precisao: 80, pp: 3, ppMax: 3 },
-    ]);
-    setAtaqueJ2([
-      { nome: "Garra de Dragão", dano: 200, precisao: 75, pp: 3, ppMax: 3 },
-      { nome: "Rajada de Fogo", dano: 20, precisao: 80, pp: 3, ppMax: 3 },
-      { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
-    ]);
+    setItensJ1(dados.itensJ1);
+    setItensJ2(dados.itensJ2);
+    setAtaqueJ1(dados.ataquesJ1);
+    setAtaqueJ2(dados.ataquesJ2);
   }
 
   function acertou(precisao: number) {
@@ -111,7 +77,9 @@ export default function Batalha() {
           setMensagem(`${ataqueJ2[index].nome} errou`);
         }
       }
-    } else if (acao === "cura") {
+    } 
+    
+    else if (acao === "cura") {
       if (atacante === "J1") {
         setPvJ1((prevPv) => Math.min(prevPv + itemJ1[index].cura, 100));
         for (let i = 0; i < ataqueJ1.length; i++) {
