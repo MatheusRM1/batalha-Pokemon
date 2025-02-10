@@ -1,15 +1,22 @@
 import "./Quadro.css";
 
-interface QuadroProps{
-    pvJ1: number;
-    pvJ2: number;
-    turno: number;
-    descricao: string;
-    ganhador: () =>boolean;
-    resetar: () =>void;
+interface QuadroProps {
+  pvJ1: number;
+  pvJ2: number;
+  turno: number;
+  descricao: string;
+  ganhador: () => boolean;
+  resetar: () => void;
 }
 
-export default function Quadro({pvJ1, pvJ2, turno, descricao, ganhador, resetar}: QuadroProps) {
+export default function Quadro({
+  pvJ1,
+  pvJ2,
+  turno,
+  descricao,
+  ganhador,
+  resetar,
+}: QuadroProps) {
   return (
     <>
       <div className="quadro">
@@ -23,7 +30,13 @@ export default function Quadro({pvJ1, pvJ2, turno, descricao, ganhador, resetar}
           <p className="rodada">Vez do Jogador 2</p>
         )}
 
-        { ganhador() ?  <button className="reinicia" onClick={() => resetar()}>Reiniciar</button> : <p className="mensagem">{descricao}</p> }
+        {ganhador() ? (
+          <button className="reinicia" onClick={() => resetar()}>
+            Reiniciar
+          </button>
+        ) : (
+          <p className="mensagem">{descricao}</p>
+        )}
       </div>
     </>
   );

@@ -11,26 +11,26 @@ export default function Batalha() {
   const [mensagem, setMensagem] = useState("Comeca o Jogo");
 
   const [itensJ1, setItensJ1] = useState([
-    { nome: "Elidio", cura: 5, recuperaPP: 3, uso: 3 },
-    { nome: "Semente", cura: 10, recuperaPP: 3, uso: 2 },
-    { nome: "I'am Back", cura: 50, recuperaPP: 3, uso: 1 },
+    { nome: "Restaurar", cura: 5, recuperaPP: 5, uso: 3 },
+    { nome: "Whey Protein", cura: 10, recuperaPP: 5, uso: 2 },
+    { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
   ]);
 
   const [itensJ2, setItensJ2] = useState([
-    { nome: "Elidio", cura: 5, recuperaPP: 5, uso: 3 },
+    { nome: "Estus", cura: 5, recuperaPP: 5, uso: 3 },
     { nome: "Semente", cura: 10, recuperaPP: 5, uso: 2 },
-    { nome: "I'am Back", cura: 50, recuperaPP: 5, uso: 1 },
+    { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
   ]);
 
   const [ataquesJ1, setAtaqueJ1] = useState([
-    { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
-    { nome: "Electro Ball", dano: 50, precisao: 90, pp: 5, ppMax: 5 },
-    { nome: "Ataque Rápido", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+    { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 2, ppMax: 2 },
+    { nome: "Electro Ball", dano: 20, precisao: 90, pp: 5, ppMax: 5 },
+    { nome: "Ataque Rápido", dano: 200, precisao: 80, pp: 3, ppMax: 3 },
   ]);
 
   const [ataquesJ2, setAtaqueJ2] = useState([
-    { nome: "Garra de Dragão", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
-    { nome: "Rajada de Fogo", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+    { nome: "Garra de Dragão", dano: 200, precisao: 75, pp: 3, ppMax: 3 },
+    { nome: "Rajada de Fogo", dano: 20, precisao: 80, pp: 3, ppMax: 3 },
     { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
   ]);
 
@@ -40,23 +40,23 @@ export default function Batalha() {
     setTurno(0);
     setMensagem("Comeca o Jogo");
     setItensJ1([
-      { nome: "Elidio", cura: 5, recuperaPP: 3, uso: 3 },
-      { nome: "Semente", cura: 10, recuperaPP: 3, uso: 2 },
-      { nome: "I'am Back", cura: 50, recuperaPP: 3, uso: 1 },
+      { nome: "Restaurar", cura: 5, recuperaPP: 5, uso: 3 },
+      { nome: "Whey Protein", cura: 10, recuperaPP: 5, uso: 2 },
+      { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
     ]);
     setItensJ2([
-      { nome: "Elidio", cura: 5, recuperaPP: 5, uso: 3 },
+      { nome: "Estus", cura: 5, recuperaPP: 5, uso: 3 },
       { nome: "Semente", cura: 10, recuperaPP: 5, uso: 2 },
-      { nome: "I'am Back", cura: 50, recuperaPP: 5, uso: 1 },
+      { nome: "I'am Back", cura: 100, recuperaPP: 5, uso: 1 },
     ]);
     setAtaqueJ1([
-      { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
-      { nome: "Electro Ball", dano: 50, precisao: 90, pp: 5, ppMax: 5 },
-      { nome: "Ataque Rápido", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+      { nome: "Thunderstorm", dano: 50, precisao: 75, pp: 2, ppMax: 2 },
+      { nome: "Electro Ball", dano: 20, precisao: 90, pp: 5, ppMax: 5 },
+      { nome: "Ataque Rápido", dano: 200, precisao: 80, pp: 3, ppMax: 3 },
     ]);
     setAtaqueJ2([
-      { nome: "Garra de Dragão", dano: 50, precisao: 75, pp: 1, ppMax: 5 },
-      { nome: "Rajada de Fogo", dano: 50, precisao: 80, pp: 5, ppMax: 5 },
+      { nome: "Garra de Dragão", dano: 200, precisao: 75, pp: 3, ppMax: 3 },
+      { nome: "Rajada de Fogo", dano: 20, precisao: 80, pp: 3, ppMax: 3 },
       { nome: "Golpe de Ar", dano: 50, precisao: 70, pp: 5, ppMax: 5 },
     ]);
   }
@@ -88,27 +88,27 @@ export default function Batalha() {
     const itemJ2 = [...itensJ2];
 
     if (acao === "ataca") {
-      if (atacante === "J1" && !verificaGanhador()) {
+      if (atacante === "J1") {
         if (acertou(ataqueJ1[index].precisao)) {
           setPvJ2((prevPv) => Math.max(prevPv - ataqueJ1[index].dano, 0));
           ataqueJ1[index].pp -= 1;
           setAtaqueJ1(ataqueJ1);
-          setMensagem(`O ${ataqueJ1[index].nome} acertou`);
+          setMensagem(`${ataqueJ1[index].nome} acertou`);
         } else {
           ataqueJ1[index].pp -= 1;
           setAtaqueJ1(ataqueJ1);
-          setMensagem(`O ${ataqueJ1[index].nome} errou`);
+          setMensagem(`${ataqueJ1[index].nome} errou`);
         }
-      } else if (atacante === "J2" && !verificaGanhador()) {
+      } else if (atacante === "J2") {
         if (acertou(ataqueJ2[index].precisao)) {
           setPvJ1((prevPv) => Math.max(prevPv - ataqueJ2[index].dano, 0));
           ataqueJ2[index].pp -= 1;
           setAtaqueJ2(ataqueJ2);
-          setMensagem(`O ${ataqueJ2[index].nome} acertou`);
+          setMensagem(`${ataqueJ2[index].nome} acertou`);
         } else {
           ataqueJ2[index].pp -= 1;
           setAtaqueJ2(ataqueJ2);
-          setMensagem(`O ${ataqueJ2[index].nome} errou`);
+          setMensagem(`${ataqueJ2[index].nome} errou`);
         }
       }
     } else if (acao === "cura") {
