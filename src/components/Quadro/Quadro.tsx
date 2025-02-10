@@ -20,9 +20,9 @@ export default function Quadro({
   return (
     <>
       <div className="quadro">
-        {pvJ1 === 0 ? (
+        {pvJ2 === 0 ? (
           <p className="rodada">Vitória do Jogador 1</p>
-        ) : pvJ2 === 0 ? (
+        ) : pvJ1 === 0 ? (
           <p className="rodada">Vitória do Jogador 2</p>
         ) : turno % 2 === 0 ? (
           <p className="rodada">Vez do jogador 1</p>

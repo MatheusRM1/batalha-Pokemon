@@ -43,7 +43,7 @@ export default function Botoes({ataques, atacar, itens, usarItem, turno, ganhado
               </button>
             </>
           ) : ( !opcoesItens && 
-            <button className="botao" disabled={turno || ganhador()} onClick={() => setOpcoesAtaque(true)}>
+            <button className="botao" disabled={!turno || ganhador()} onClick={() => setOpcoesAtaque(true)}>
               Atacar
             </button>
           )}
@@ -71,7 +71,7 @@ export default function Botoes({ataques, atacar, itens, usarItem, turno, ganhado
               </button>
             </>
           ) : ( !opcoesAtaque &&
-            <button className="botao" disabled={turno || ganhador()} onClick={() => setOpcoesItens(true)}>
+            <button className="botao" disabled={!turno || ganhador()} onClick={() => setOpcoesItens(true)}>
               Itens
             </button>
           )}

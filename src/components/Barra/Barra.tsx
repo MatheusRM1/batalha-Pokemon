@@ -11,7 +11,7 @@ interface BarraProps {
 export default function Barra({ pv, turno, children, ganhador }: BarraProps) {
   return (
     <>
-      <div className="container" style={{ opacity: ganhador() ? 1 : turno ? 0.5 : 1, }}>
+      <div className="container" style={{ opacity: ganhador() ? 1 : turno ? 1 : 0.5, }}>
         <div className="status">
           <div className="pv">
             <h2>PV</h2>
