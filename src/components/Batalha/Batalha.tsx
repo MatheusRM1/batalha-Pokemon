@@ -48,10 +48,10 @@ export default function Batalha() {
     index: number,
     acao: "ataca" | "cura"
   ) {
-    const ataqueJ1 = [...ataquesJ1];
-    const ataqueJ2 = [...ataquesJ2];
-    const itemJ1 = [...itensJ1];
-    const itemJ2 = [...itensJ2];
+    const ataqueJ1 = structuredClone(ataquesJ1);
+    const ataqueJ2 = structuredClone(ataquesJ2);
+    const itemJ1 = structuredClone(itensJ1);
+    const itemJ2 = structuredClone(itensJ2);
 
     if (acao === "ataca") {
       if (atacante === "J1") {
